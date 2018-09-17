@@ -35,6 +35,7 @@ void insert(ht_t *ht, char *key, char *value){
     ht->buckets[index]->value = value;
 
     ht->size++;
+    printf("Inserted {\"%s\" : \"%s\"}\n", key, value);
 }
 
 char* search(ht_t *ht, char *key){
@@ -49,10 +50,28 @@ char* search(ht_t *ht, char *key){
     return NULL;
 }
 
+void delete_bucket(ht_t *ht, char* key){
+    int index = hash(ht, key);
+    while(ht->buckets[index] != NULL){
+        if(ht->buckets[index]->key == key){
+            printf("deleting {\"%s\" : \"%s\"}\n", ht->buckets[index]->key, ht->buckets[index]->value);
+            ht->buckets[index]->key = '\0';
+            ht->buckets[index]->value = '\0';
+            ht->size--;
+            return;
+        }
+        ++index;
+        index %= ht->capacity;
+    } 
+    printf("key \"%s\" not found\n", key);
+}
+
 void print(ht_t *ht){
+    printf("\nHashtable Values: \n");
     for(int i=0; i < ht->capacity; i++) {
-        if(ht->buckets[i] != NULL && ht->buckets[i]->key[0] != '\0'){
-            printf("%s : %s\n", ht->buckets[i]->key, ht->buckets[i]->value);
+        if(ht->buckets[i] != NULL && ht->buckets[i]->key){
+            printf("{\"%s\" : \"%s\"}\n", ht->buckets[i]->key, ht->buckets[i]->value);
         }
     }
+    printf("\n");
 }
