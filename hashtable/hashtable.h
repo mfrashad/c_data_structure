@@ -1,6 +1,5 @@
 // Hashtable
 
-#define CAPACITY 100
 
 typedef struct {
     char *key;
@@ -15,12 +14,14 @@ typedef struct {
 
 int hash(ht_t *ht, char *key);
 
-void init(ht_t *ht);
+ht_t* new_hashtable();
 
 void insert(ht_t *ht, char *key, char *value);
 
-void search(ht_t *ht, char *key);
+char* search(ht_t *ht, char *key);
 
-void remove(ht_t *ht, char *key);
+void delete_bucket(ht_t *ht, char *key);
 
 void resize(ht_t *ht);
+
+void print(ht_t *ht);

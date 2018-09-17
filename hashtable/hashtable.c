@@ -2,17 +2,20 @@
 #include <stdlib.h>
 #include "hashtable.h"
 
-void init(ht_t *ht){
-    ht = malloc(sizeof(ht_t));
+#define CAPACITY 100
+
+ht_t* new_hashtable(){
+    ht_t *ht = malloc(sizeof(ht_t));
 
     ht->size = 0;
     ht->capacity = CAPACITY;
     ht->buckets = calloc(CAPACITY, sizeof(bucket_t));
+    return ht;
 }
 
 int hash(ht_t *ht, char *key){
     int sum = 0;
-    for(int i=0; key[i] != "\0"; i++){
+    for(int i=0; key[i] != '\0'; i++){
        sum += (int)key[i]; 
     }
 
@@ -20,20 +23,21 @@ int hash(ht_t *ht, char *key){
 }
 
 void insert(ht_t *ht, char *key, char *value){
-    bucket_t *bucket = malloc(sizeof(bucket_t));
-    bucket->key = key;
-    bucket->value = value;
-
+    
     int index = hash(ht, key);
-    while(ht->buckets[index] != NULL && ht->buckets[index]->key == -1){
+    while(ht->buckets[index] != NULL && ht->buckets[index]->key[0] == '\0'){
         ++index;
         index %= ht->capacity;
     }
-    ht->buckets[index] = bucket;
+
+    ht->buckets[index] = malloc(sizeof(bucket_t));
+    ht->buckets[index]->key = key;
+    ht->buckets[index]->value = value;
+
     ht->size++;
 }
 
-void search(ht_t *ht, char *key){
+char* search(ht_t *ht, char *key){
     int index = hash(ht, key);
     while(ht->buckets[index] != NULL){
         if(ht->buckets[index]->key == key){
@@ -45,3 +49,10 @@ void search(ht_t *ht, char *key){
     return NULL;
 }
 
+void print(ht_t *ht){
+    for(int i=0; i < ht->capacity; i++) {
+        if(ht->buckets[i] != NULL && ht->buckets[i]->key[0] != '\0'){
+            printf("%s : %s\n", ht->buckets[i]->key, ht->buckets[i]->value);
+        }
+    }
+}
