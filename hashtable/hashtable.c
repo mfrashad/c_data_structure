@@ -13,6 +13,22 @@ ht_t* new_hashtable(){
     return ht;
 }
 
+void resize(ht_t **ht){
+    float load = (float)(*ht)->size / (float)(*ht)->capacity;
+    if(load >= 0.75){
+        ht_t *new_ht = malloc(sizeof(ht_t));
+        new_ht->size = 0;
+        new_ht->capacity = (*ht)->capacity * 2;
+        new_ht->buckets = calloc(new_ht->capacity, sizeof(bucket_t));
+        for(int i=0; i < (*ht)->capacity; i++){
+            if((*ht)->buckets[i] != NULL && (*ht)->buckets[i]->key){
+                insert(&new_ht, (*ht)->buckets[i]->key, (*ht)->buckets[i]->value); 
+            }
+        }
+        *ht = new_ht;
+    }
+}
+
 int hash(ht_t *ht, char *key){
     int sum = 0;
     for(int i=0; key[i] != '\0'; i++){
@@ -22,20 +38,20 @@ int hash(ht_t *ht, char *key){
     return sum % ht->capacity;
 }
 
-void insert(ht_t *ht, char *key, char *value){
+void insert(ht_t **ht, char *key, char *value){
     
-    int index = hash(ht, key);
-    while(ht->buckets[index] != NULL && ht->buckets[index]->key[0] == '\0'){
+    resize(ht);
+    int index = hash(*ht, key);
+    while((*ht)->buckets[index] != NULL && (*ht)->buckets[index]->key[0] == '\0'){
         ++index;
-        index %= ht->capacity;
+        index %= (*ht)->capacity;
     }
 
-    ht->buckets[index] = malloc(sizeof(bucket_t));
-    ht->buckets[index]->key = key;
-    ht->buckets[index]->value = value;
+    (*ht)->buckets[index] = malloc(sizeof(bucket_t));
+    (*ht)->buckets[index]->key = key;
+    (*ht)->buckets[index]->value = value;
 
-    ht->size++;
-    printf("Inserted {\"%s\" : \"%s\"}\n", key, value);
+    (*ht)->size++;
 }
 
 char* search(ht_t *ht, char *key){

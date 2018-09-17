@@ -16,12 +16,12 @@ int hash(ht_t *ht, char *key);
 
 ht_t* new_hashtable();
 
-void insert(ht_t *ht, char *key, char *value);
+void insert(ht_t **ht, char *key, char *value);
 
 char* search(ht_t *ht, char *key);
 
 void delete_bucket(ht_t *ht, char *key);
 
-void resize(ht_t *ht);
+void resize(ht_t **ht);
 
 void print(ht_t *ht);
