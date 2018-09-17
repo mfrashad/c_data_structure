@@ -19,3 +19,9 @@ void vector_set(Vector *vector, int index, int value);
 void vector_double_capacity_if_full(Vector *vector);
 
 void vector_free(Vector *vector);
+
+void buble_sort(Vector *vector);
+
+void print(Vector vector);
+
+void swap(int *a, int *b);

@@ -40,3 +40,30 @@ void vector_double_capacity_if_full(Vector *vector){
 void vector_free(Vector *vector){
     free(vector->data);
 }
+
+void buble_sort(Vector *vector){
+    int swap_count = 0;
+    do {
+        swap_count = 0;
+        for(int j=1; j < vector->size; j++){
+            if(vector->data[j-1] > vector->data[j]){
+                swap(&vector->data[j-1], &vector->data[j]);
+                swap_count++;
+            } 
+        }
+    } while(swap_count > 0);
+}
+
+void print(Vector vector){
+    printf("[ ");
+    for(int i=0; i < vector.size; i++){
+        printf("%d, ", vector.data[i]);
+    }
+    printf("]\n");
+}
+
+void swap(int *a, int *b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}

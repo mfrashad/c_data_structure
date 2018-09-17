@@ -9,12 +9,18 @@ int main() {
         vector_append(&vector, i);
     }
 
+    vector_append(&vector, 4);
+    vector_append(&vector, 1);
+    vector_append(&vector, 9);
+    vector_append(&vector, 3);
+    vector_append(&vector, 3);
+
     vector_set(&vector, 30, 50);
 
-    for(int i=0; i<vector.size; i++){
-        printf("vector[%d] : %d \n", i, vector.data[i]);
-    }
-
+    print(vector);
+    printf("\n");
+    buble_sort(&vector);
+    print(vector);
 
     vector_free(&vector);
 }
