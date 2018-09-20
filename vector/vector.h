@@ -24,6 +24,8 @@ void buble_sort(Vector *vector);
 
 void selection_sort(Vector *vector);
 
+void insertion_sort(Vector *vector);
+
 void print(Vector vector);
 
 void swap(int *a, int *b);

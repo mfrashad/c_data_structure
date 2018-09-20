@@ -20,7 +20,7 @@ int main() {
 
     print(vector);
     printf("\n");
-    selection_sort(&vector);
+    insertion_sort(&vector);
     print(vector);
 
     vector_free(&vector);

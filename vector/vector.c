@@ -66,6 +66,18 @@ void selection_sort(Vector *vector){
     }
 }
 
+void insertion_sort(Vector *vector){
+    for(int n=1; n<vector->size; n++){
+        int key = vector->data[n];
+        int i = n-1;
+        while(i >= 0 && vector->data[i] > key){
+            vector->data[i+1] = vector->data[i];
+            i = i-1;
+        }
+        vector->data[i+1] = key;
+    }
+}
+
 void print(Vector vector){
     printf("[ ");
     for(int i=0; i < vector.size; i++){
