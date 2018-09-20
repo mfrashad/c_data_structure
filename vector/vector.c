@@ -54,6 +54,18 @@ void buble_sort(Vector *vector){
     } while(swap_count > 0);
 }
 
+void selection_sort(Vector *vector){
+    for(int n=0; n<vector->size; n++){
+        int min_index = n;
+        for(int i=n; i<vector->size; i++){
+            if(vector->data[min_index] > vector->data[i]){
+                min_index = i;
+            }   
+        }
+        swap(&vector->data[n], &vector->data[min_index]);
+    }
+}
+
 void print(Vector vector){
     printf("[ ");
     for(int i=0; i < vector.size; i++){

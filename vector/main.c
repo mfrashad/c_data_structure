@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "vector.h"
 
+
 int main() {
     Vector vector;
     vector_init(&vector);
@@ -19,7 +20,7 @@ int main() {
 
     print(vector);
     printf("\n");
-    buble_sort(&vector);
+    selection_sort(&vector);
     print(vector);
 
     vector_free(&vector);
